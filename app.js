@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const session = require('express-session');
+const session = require('express-session'); 
 const app = express();
 const port = 8080;
 const hbs = require('hbs');
@@ -18,11 +18,11 @@ const viewsPath = path.join(__dirname, './views');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(session({
+app.use(session({   
   secret: 'your-secret-key',
   resave: false,
   saveUninitialized: true
-}));
+})); // Add this line
 app.use('/public/script', express.static('public/script', { 'Content-Type': 'application/javascript' }));
 app.use('/public/css', express.static('public/css', { 'Content-Type': 'text/css' }));
 app.use(express.static('public'));
@@ -41,12 +41,8 @@ passport.use(new FacebookStrategy({
   callbackURL: 'http://localhost:8080/auth/facebook/callback',
   profileFields: ['id', 'displayName', 'email']
 }, (accessToken, refreshToken, profile, done) => {
-  // Set the access token in req.user
-  const user = {
-    profile,
-    accessToken
-  };
-  return done(null, user);
+  console.log('Profile:', profile); // Log the profile object to check for displayName
+  return done(null, { profile, accessToken });
 }));
 
 
@@ -59,7 +55,7 @@ passport.deserializeUser((user, done) => {
 });
 
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session()); 
 
 // Endpoint to initiate Facebook OAuth flow
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
@@ -69,20 +65,21 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/Sign-in' }),
   (req, res) => {
     const accessToken = req.user.accessToken;
-    console.log('Access token', accessToken)
-    const integratedPageName = req.user.displayName;
-
+    console.log('Access token', accessToken);
+    const integratedPageName = req.user.profile.displayName;
+    console.log('Integrated page name', integratedPageName);
     res.redirect(`/logout?integratedPageName=${integratedPageName}`);
   });
 
-app.get('/logout', (req, res) => {
-  const integratedPageName = req.query.integratedPageName;
-  res.render('disconnect', { integratedPageName });
-});
-app.post('/disconnect/facebook', isAuthenticated, (req, res) => {
-  const integratedPageName = req.user.displayName;
-  res.redirect(`/Sign-in?integratedPageName=${integratedPageName}`); // Redirect to the sign-in page with integratedPageName as a query parameter
-});
+  app.get('/logout', (req, res) => {
+    const integratedPageName = req.query.integratedPageName;
+    console.log('This is integrated page name ',integratedPageName)
+    res.render('disconnect', { integratedPageName });
+  });
+  app.post('/disconnect/facebook', isAuthenticated, (req, res) => {
+    const integratedPageName = req.user.displayName;
+    res.redirect(`/Sign-in?integratedPageName=${integratedPageName}`); // Redirect to the sign-in page with integratedPageName as a query parameter
+  });
 // Middleware to check authentication status
 function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
@@ -92,6 +89,7 @@ function isAuthenticated(req, res, next) {
 }
 
 // Routes
+// Assuming you have the integrated page name stored in a variable called integratedPageName
 app.get('/integration', isAuthenticated, (req, res) => {
   res.render('connect', { connectedAccountName: req.user.connectedAccountName });
 });
@@ -100,10 +98,9 @@ app.get('/integration', isAuthenticated, (req, res) => {
 app.get('/Dashboard', isAuthenticated, async (req, res) => {
   try {
     // Ensure req.user contains the accessToken
-    const accessToken = req.user.accessToken;
-    console.log('final access', accessToken);
-
-
+    const { profile, accessToken } = req.user;
+    console.log('final access',req)
+    
     if (!accessToken) {
       throw new Error('Access token not found');
     }
@@ -158,7 +155,7 @@ app.post('/signin', async (req, res) => {
 
     // Calculate the expiration date for the cookie (15 seconds from now)
     const expirationDate = new Date();
-    expirationDate.setSeconds(expirationDate.getSeconds() + 15); 
+    expirationDate.setSeconds(expirationDate.getSeconds() + 15); // Expires in 15 seconds
 
     // Set the cookie with the expiration date
     res.cookie('token', token, {
@@ -188,6 +185,7 @@ app.post('/Signup', async (req, res) => {
 
     const { username, email, password } = req.body;
 
+    // Generate a unique user ID (example: using a random string)
     const userId = generateUserId();
 
     // Hash the password
@@ -225,6 +223,7 @@ app.listen(port, () => {
   console.log(`Express app listening on port ${port}`);
 });
 
+// Function to generate a unique user ID (example: using a random string)
 function generateUserId() {
   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 }
