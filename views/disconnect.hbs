@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Integration Page</title>
+ <style>
+   * {
+     box-sizing: border-box;
+   }
+
+   body {
+     font-family: Arial, sans-serif;
+     margin: 0;
+     background-color: rgb(31,77,145); /* Set body color to red */
+     padding: 0;
+     display: flex;
+     justify-content: center; /* Center horizontally */
+     align-items: center; /* Center vertically */
+     height: 100vh; /* Make sure the container is centered within the viewport */
+   }
+
+   .container {
+     display: flex;
+     flex-direction: column;
+     background-color: white; /* Set container color to white */
+     width: 24.5rem;
+     padding: 20px;
+     border-radius: 12px; /* Add border radius */
+   }
+
+   h2 {
+     text-align: center; /* Center the heading */
+     margin-bottom: 0px;
+     font-size: 1.1rem;
+   }
+    p {
+     display: inline; /* Display elements inline */
+     margin-left: 35px;
+     margin-bottom: 30px;
+   }
+
+   button {
+     width: 100%;
+     height: 40px;
+     background-color: rgb(30,77,145);
+     color: white;
+     border: none;
+     cursor: pointer;
+     border-radius: 5px; 
+     margin-bottom: 10px; 
+   }
+   .btn2{
+    background-color: rgb(245, 62, 38);
+   }
+ </style>
+</head>
+<body>
+<div class="container">
+   <h2>Facebook Page Integration</h2>
+   <p>Integrated Page:<strong>{{integratedPageName}}</strong></p>
+   <button id="disconnectBtn">Delete integration</button>
+   <a href="/Dashboard"><button class="btn2">Reply To Messages</button></a>
+ </div>
+  <script>
+   document.getElementById('disconnectBtn').addEventListener('click', async () => {
+     try {
+       const response = await fetch('/disconnect/facebook', { method: 'POST' });
+       if (response.ok) {
+         // Disconnection successful, redirect to the sign-in page
+         window.location.href = '/Sign-in';
+       } else {
+         throw new Error('Failed to disconnect');
+       }
+     } catch (error) {
+       console.error('Error disconnecting:', error.message);
+       // Optionally display an error message to the user
+     }
+   });
+ </script>
+</body>
+</html>

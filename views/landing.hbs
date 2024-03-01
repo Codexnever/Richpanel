@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sidebar Navigation</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome for icons -->
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+      height: 100vh;
+      width: 60px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: rgb(0,78,150);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start; /* Align icons to the top */
+    }
+
+    .navbar i {
+      color: #fff;
+      font-size: 24px;
+      padding: 20px;
+      cursor: pointer;
+    }
+
+    .navbar i:last-child {
+      margin-top: auto; /* Push the profile icon to the bottom */
+    }
+
+    .sidebar {
+      height: 100vh;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      left: -250px;
+      background-color: rgb(253, 241, 241);
+      transition: left 0.3s ease;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 20px;
+    }
+
+    .sidebar ul li {
+      padding: 10px 0;
+    }
+
+    .sidebar ul li a {
+      color: black;
+      text-decoration: none;
+    }
+
+    .content {
+      display: none; /* Initially hide all content sections */
+    }
+
+    .content.open {
+      display: block; /* Show content when it has the 'open' class */
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .img1{
+        width: 70px;
+        border: none;
+    }
+    .h1{
+        font-size: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="navbar">
+  <img  class="img1" src="/img/images-removebg-preview.png" alt="">
+  <i class="fas fa-inbox" onclick="openSection('inbox')"></i>
+  <i class="fas fa-user" onclick="openSection('profile')"></i>
+  <i class="fas fa-chart-line" onclick="openSection('settings')"></i>
+  <i class="fas fa-user-circle" onclick="openProfile()"></i> <!-- Profile icon -->
+</div>
+
+<div class="sidebar" id="sidebar">
+  <span class="close-btn" onclick="closeSidebar()">&times;</span>
+  <div class="content" id="content-home">
+    <ul>
+    
+    </ul>
+  </div>
+  <div class="content" id="content-inbox">
+    <ul>
+<ul>
+  {{#each conversations}}
+    <li><a href="#">{{ this }}</a></li>
+  {{/each}}
+</ul>
+      <li><a href="#">Inbox Content 2</a></li>
+      <li><a href="#">Inbox Content 3</a></li>
+    </ul>
+  </div>
+  <div class="content" id="content-profile">
+    <ul>
+      <li><a href="#">Profile Content 1</a></li>
+      <li><a href="#">Profile Content 2</a></li>
+      <li><a href="#">Profile Content 3</a></li>
+    </ul>
+  </div>
+  <div class="content" id="content-settings">
+    <ul>
+      <li><a href="#">Settings Content 1</a></li>
+      <li><a href="#">Settings Content 2</a></li>
+      <li><a href="#">Settings Content 3</a></li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  function openSection(section) {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.add('open');
+
+    // Hide all content sections
+    const contentSections = document.querySelectorAll('.content');
+    contentSections.forEach(section => section.classList.remove('open'));
+
+    // Show the selected content section
+    const selectedContent = document.getElementById('content-' + section);
+    selectedContent.classList.add('open');
+  }
+
+  function closeSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.remove('open');
+  }
+
+  function openProfile() {
+    // Implement logic to open the profile section
+    alert('Profile icon clicked');
+  }
+</script>
+
+</body>
+</html>

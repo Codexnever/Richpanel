@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Sign Up</title>
+ <style>
+   * {
+     box-sizing: border-box;
+   }
+
+   body {
+     font-family: Arial, sans-serif;
+     margin: 0;
+     background-color: #0066cc;
+     padding: 0;
+     display: flex;
+     justify-content: center;
+     align-items: center; 
+     height: 100vh; 
+
+   .container {
+     display: flex;
+     flex-direction: column;
+     background-color: rgb(255,255,255);
+     width: 25rem;
+     padding: 20px;
+     border-radius: 10px; /* Add border radius */
+   }
+
+   h1 {
+    
+     margin-bottom: 20px;
+     text-align: center; /* Center the heading */
+   }
+
+   form {
+     width: 100%;
+     max-width: 300px;
+     margin: 0 auto; /* Center the form */
+   }
+
+   label,
+   input,
+   button {
+     width: 100%;
+     margin-bottom: 10px;
+   }
+
+   input[type="text"],
+   input[type="email"],
+   input[type="password"] {
+     height: 30px;
+     padding: 5px;
+     border-radius: 5px;
+     border: 1px solid #ccc; 
+   }
+
+   button {
+     height: 40px;
+     background-color: rgb(30,77,145);
+     color: white;
+     border: none;
+     cursor: pointer;
+     border-radius: 5px; 
+   }
+
+   a {
+     color: #0066cc;
+     text-decoration: none;
+   }
+
+   a:hover {
+     text-decoration: underline;
+   }
+
+   label[for="remember"] {
+     display: flex;
+     align-items: center; /* Center vertically */
+     margin-left: -58px;
+   }
+   #remember{
+     width: 20px;
+     display: flex;
+     justify-content: center;
+    margin-left: 63px;
+   margin-top: 8px;
+   }
+   p{
+    margin-left: 60px;
+   }
+ </style>
+</head>
+<body>
+ <div class="container">
+ <h1 style="font-size: 27px;">Create Account</h1>
+ <form class="signup" action="/Signup" method="post" >
+  <label for="name">Name:</label><br>
+ <input type="text" id="name" name="name" value="Manoj Kumar" class="userrname" required><br>
+ <label for="email">Email:</label><br>
+ <input type="email" id="email" name="email" value="manoj@richpanel.com" class="Emaail" required><br>
+ <label for="password">Password:</label><br>
+ <input type="password" id="password" name="password" class="Passsword" required><br>
+ <label for="remember"> 
+   <input type="checkbox" id="remember" name="remember"  >
+   Remember Me
+ </label><br>
+ <button type="submit">Sign Up</button>
+ </form>
+ <p>Already have an account? <a href="/Sign-in">Login</a></p>
+ </div>
+</body>
+</html>
