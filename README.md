@@ -1,18 +1,15 @@
-Sure, here's the complete content for your `README.md` file in a single block:
 
 ```markdown
-## Overview:
-This project is a Facebook integration application that allows users to authenticate via Facebook OAuth, fetch conversations using the Facebook Graph API, and perform basic CRUD operations on user accounts stored in a MongoDB database. The server is built using Node.js with Express.js framework, and it utilizes various npm packages such as `passport`, `bcrypt`, `jsonwebtoken`, and `axios`. The front-end is rendered using Handlebars (hbs) templates.
+# Facebook Integration App
+
+
 
 ## Installation:
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/facebook-integration-app.git
-   ```
+Git clone [https://github.com/Codexnever/Richpanel.git]   ```
 2. Navigate to the project directory:
-   ```bash
-   cd facebook-integration-app
-   ```
+
 3. Install dependencies:
    ```bash
    npm install
@@ -24,6 +21,21 @@ This project is a Facebook integration application that allows users to authenti
    npm start
    ```
 2. Access the application in your web browser at [http://localhost:8080](http://localhost:8080).
+
+## Tech Stack:
+- **Backend:**
+  - Node.js
+  - Express.js
+  - MongoDB
+  - Passport.js
+  - bcrypt
+  - jsonwebtoken
+  - axios
+
+- **Frontend:**
+  - Handlebars (hbs)
+
+![Project Image](public/img/2.png)   ![Project Image](public/img/3.png)  ![Project Image](public/img/4.png)  ![Project Image](public/img/5.png)
 
 ## Dependencies:
 - **express:** Web framework for Node.js.
@@ -58,12 +70,8 @@ This project is a Facebook integration application that allows users to authenti
 ## Error Handling:
 - Errors during authentication, sign-in, sign-up, and conversation fetching are logged and appropriate error responses are sent to the client.
 - Detailed error messages are logged to the console for debugging purposes.
+   
+![Error Screenshot](public/img/1.png)
 
-## Contributors:
-- [Your Name](https://github.com/your-username)
 
-## License:
-This project is licensed under the [MIT License](LICENSE).
-```
 
-You can copy this block and replace the content of your existing `README.md` file with it. Make sure to update any placeholders like `[http://localhost:8080](http://localhost:8080)` with the actual URLs, and adjust any other details specific to your project.
